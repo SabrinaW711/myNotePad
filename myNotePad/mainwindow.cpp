@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    setWindowTitle("My Application");
+
     ui->setupUi(this);
     //谁发出信号->发出什么信号->谁来处理(MainWindow窗口)->怎么处理
     connect(ui -> newAction, &QAction::triggered, this, &MainWindow::newActionSlot);
@@ -55,4 +57,23 @@ void MainWindow::saveActionSlot() {
         file.close();
 
     }
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *k) {
+    if (k -> modifiers() == Qt::ControlModifier && k -> key() == Qt::Key_S) {
+        saveActionSlot();
+    }
+
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *m) {
+    QPoint pt = m -> pos();
+    //获取光标位置
+    qDebug() << pt;
+    if (m -> button() == Qt::LeftButton) {
+        qDebug() << "左键被按下";
+    }else if (m -> button() == Qt::RightButton){
+        qDebug() << "右键被按下";
+    }
+
 }
